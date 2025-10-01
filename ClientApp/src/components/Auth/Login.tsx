@@ -29,9 +29,7 @@ export function Login() {
     const data =JSON.stringify({ username: username, password: password });
     api.post("/signin", data)
     .then((res) => {
-        if (res.data.statuscode === 200) {
             setLoginMessage(res.data.message);
-
             if (res.data.qrcodeurl != null) {
                 window.sessionStorage.setItem('USERID',res.data.id);
                 window.sessionStorage.setItem('TOKEN',res.data.token);
@@ -39,7 +37,6 @@ export function Login() {
                 window.sessionStorage.setItem('USERPIC',res.data.profilepic);
                 $("#loginReset").click();
                 $("#mfaModal").click();
-
             } else {
                 window.sessionStorage.setItem('USERID',res.data.id);
                 window.sessionStorage.setItem('USERNAME',res.data.username);
@@ -49,16 +46,11 @@ export function Login() {
                 $("#loginReset").click();
                 window.location.reload();
             }
-            return;
-        } else {
-          setLoginMessage(res.data.message);
             setTimeout(() => {
               setLoginMessage('');
             }, 3000);
-            return;
-        }
-      }, (error) => {
-            setLoginMessage(error.message);
+      }, (error: any) => {
+            setLoginMessage(error.response.data.message);
             setTimeout(() => {
               setLoginMessage('');
             }, 3000);

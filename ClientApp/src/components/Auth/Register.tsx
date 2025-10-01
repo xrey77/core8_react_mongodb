@@ -37,24 +37,16 @@ export function Register() {
       username: username, password: password });
     api.post("/signup", data)
     .then((res) => {
-        if (res.data.statuscode === 200) {
-            setRegisterMsg(res.data.message);
-            return;
-        } else {
           setRegisterMsg(res.data.message);
           window.setTimeout(() => {
             setRegisterMsg('');
           }, 3000);
-          return;
-        }
-      }, (error) => {
-            setRegisterMsg(error.message);
+      }, (error: any) => {
+            setRegisterMsg(error.response.data.message);
             window.setTimeout(() => {
               setRegisterMsg('');
             }, 3000);
-          return;
     });
-
     $("#registerReset").click();
   }
 

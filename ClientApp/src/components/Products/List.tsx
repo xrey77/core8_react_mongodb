@@ -7,7 +7,7 @@ const api = axios.create({
               'Content-Type': 'application/json'}
 })
 
-const formatNumberWithCommaDecimal = (number: any) => {
+const toDecimal = (number: any) => {
   const formatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2, // Ensures at least two decimal places
     maximumFractionDigits: 2, // Limits to two decimal places
@@ -30,6 +30,7 @@ export function ProductList() {
   let [totpage, setTotpage] = useState<number>(0);
   let [ctr, setCtr] = useState<number>(0);
   const [prods, setProds] = useState<Products[]>([]);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     getProducts(page);
@@ -42,8 +43,8 @@ export function ProductList() {
         setTotpage(res.data.totpage);
         setPage(res.data.page);
     }, (error: any) => {
-            console.log(error.message);
-            return;
+        setMessage(error.message);
+        return;
     });
   }
 
@@ -90,7 +91,7 @@ export function ProductList() {
   return (
    <div className="container-fluid">
     <h1 className="text-center">Product List</h1>
-
+    <div className='text-danger'>{message}</div>
     <table className="table">
         <thead>
           <tr>
@@ -109,7 +110,7 @@ export function ProductList() {
                  <td>{item.descriptions}</td>
                  <td>{item.qty}</td>
                  <td>{ item.qty > 1 ? item.unit+'S' : 'UNIT'}</td>
-                 <td>&#8369;{formatNumberWithCommaDecimal(item.sellPrice)}</td>
+                 <td>&#8369;{toDecimal(item.sellPrice)}</td>
                </tr>
               );
         })}

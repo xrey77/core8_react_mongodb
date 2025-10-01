@@ -16,7 +16,7 @@ interface Products {
   unit: string
 }
 
-const formatNumberWithCommaDecimal = (number: any) => {
+const toDecimal = (number: any) => {
   const formatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2, // Ensures at least two decimal places
     maximumFractionDigits: 2, // Limits to two decimal places
@@ -29,6 +29,7 @@ const formatNumberWithCommaDecimal = (number: any) => {
 export function ProductSearch() {
   const [prodsearch, setProdsearch] = useState<Products[]>([]);
   let [searchkey, setSearchkey] = useState<string>('');
+  const [message, setMessage] = useState('');
 
   const getProdsearch = (event: any) => {
       event.preventDefault();
@@ -39,8 +40,7 @@ export function ProductSearch() {
       .then((res) => {
         setProdsearch(res.data.products);
       }, (error: any) => {
-          // setErrors(error.message);
-          console.log(error.message);
+          setMessage(error.response.data.message);
           return;
       });  
   }
@@ -48,7 +48,7 @@ export function ProductSearch() {
   return (
     <div className="container mb-4">
         <h2>Search Product</h2>
-
+        <div className='text-danger'>{message}</div>
         <form className="row g-3" onSubmit={getProdsearch} autoComplete='off'>
             <div className="col-auto">
               <input type="text" required className="form-control-sm" value={searchkey} onChange={e => setSearchkey(e.target.value)} placeholder="enter Product keyword"/>
@@ -73,7 +73,7 @@ export function ProductSearch() {
                     </div>
                     <div className="card-footer">
                       <p className="card-text text-danger"><span className="text-dark">PRICE :</span>&nbsp;<strong>
-                        &#8369;{formatNumberWithCommaDecimal(item.sellPrice)}</strong></p>
+                        &#8369;{toDecimal(item.sellPrice)}</strong></p>
                     </div>   
                   </div>
                 );

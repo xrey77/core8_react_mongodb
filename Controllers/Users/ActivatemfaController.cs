@@ -52,7 +52,7 @@ namespace core8_react_mongodb.Controllers.Users
                     _userService.ActivateMfa(id, imageUrl);
                     return Ok(new {statuscode = 200, message="2-Factor Authenticator has been enabled."});
                 } else {
-                    return BadRequest(new {statuscode = 404, message="User not found."});
+                    return NotFound(new {statuscode = 404, message="User not found."});
                 }
             } else {
                 _userService.ActivateMfa(id, null);

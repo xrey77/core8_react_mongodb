@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
-import axios from 'axios';
 import $ from 'jquery';
+import axios from 'axios';
 
 const api = axios.create({
    baseURL: "https://localhost:7241",
@@ -24,21 +24,15 @@ export default function Mfa() {
     const data =JSON.stringify({ id: userId, otp: otpcode });
     api.post("/validateotp", data)
     .then((res) => {
-        if (res.data.statuscode === 200) {
-            setOtpMessage(res.data.message);
-            sessionStorage.setItem("USERNAME", res.data.username);
-            window.setTimeout(() => {
-              setOtpMessage('');
-              $("#mfaReset").click();
-              window.location.reload();
-            }, 3000);
-            return;
-        } else {
           setOtpMessage(res.data.message);
-          return;
-        }
-      }, (error) => {
-            setOtpMessage(error.message);
+          sessionStorage.setItem("USERNAME", res.data.username);
+          window.setTimeout(() => {
+            setOtpMessage('');
+            $("#mfaReset").click();
+            window.location.reload();
+          }, 3000);
+      }, (error: any) => {
+            setOtpMessage(error.response.data.message);
             window.setTimeout(() => {
               setOtpMessage('');
             }, 3000);

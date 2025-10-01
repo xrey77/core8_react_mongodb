@@ -55,7 +55,7 @@ namespace core8_react_mongodb.Controllers.Users
                 var model = _mapper.Map<IList<UserModel>>(user);
                 return Ok(model);
             } catch(AppException ex) {
-               return Ok(new {statuscode = 404, Message = ex.Message});
+               return BadRequest(new {statuscode = 400, Message = ex.Message});
             }
         }
     }

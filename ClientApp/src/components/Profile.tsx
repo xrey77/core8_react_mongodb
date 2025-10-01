@@ -45,7 +45,14 @@ export function Profile() {
             setMobile(res.data.user.mobile);
             setQrcodeurl(res.data.user.qrcodeurl)
             setUserpicture(res.data.user.profilepic);
-            });
+        }, (error: any) => {
+            setProfileMsg(error.response.data.message);
+            let timer: any = setTimeout(() => {
+                setProfileMsg('');
+                clearTimeout(timer);
+            },3000);
+            return;
+        });
     };    
 
     useEffect(() => {
@@ -83,15 +90,13 @@ export function Profile() {
                     setProfileMsg('');
                     clearTimeout(timer);
                 },800);
-                return;
             }
-        }, (error) => {
-            setProfileMsg(error.message);
+        }, (error: any) => {
+            setProfileMsg(error.response.data.message);
             let timer: any = setTimeout(() => {
                 setProfileMsg('');
                 clearTimeout(timer);
             },3000);
-            return;
         });
     }
 
@@ -99,8 +104,6 @@ export function Profile() {
         if (e.target.checked) {
             setShowUpdate(true);
             setShowPwd(true);
-            // $("#checkChangePassword").prop('disabled', false);
-            return;
         } else {
             setNewPassword('');
             setConfNewPassword('');
@@ -129,8 +132,8 @@ export function Profile() {
                     },3000);
                     return;
                 }
-            }, (error) => {
-                setProfileMsg(error.message);
+            }, (error: any) => {
+                setProfileMsg(error.response.data.message);
                 let timer: any = setTimeout(() => {
                     setProfileMsg('');
                     clearTimeout(timer);
@@ -161,8 +164,8 @@ export function Profile() {
                 setQrcodeurl(res.data.qrcodeurl);
                 clearTimeout(timer);
             },3000);
-        }, (error) => {
-            setProfileMsg(error.message);
+        }, (error: any) => {
+            setProfileMsg(error.response.data.message);
             let timer: any = setTimeout(() => {
                 setProfileMsg('');
                 clearTimeout(timer);
@@ -183,8 +186,8 @@ export function Profile() {
                 setProfileMsg('');
                 clearTimeout(timer);
             },3000);
-        }, (error) => {
-            setProfileMsg(error.message);            
+        }, (error: any) => {
+            setProfileMsg(error.response.data.message);            
             let timer: any = setTimeout(() => {
                 setProfileMsg('');
                 clearTimeout(timer);
@@ -233,8 +236,8 @@ export function Profile() {
                 },3000);
                 return;
             }
-        }, (error) => {
-            setProfileMsg(error.message);
+        }, (error: any) => {
+            setProfileMsg(error.response.data.message);
             let timer: any = setTimeout(() => {
                 setProfileMsg('');
                 clearTimeout(timer);

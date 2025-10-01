@@ -54,7 +54,7 @@ namespace core8_react_mongodb.Controllers.Users
             }
             catch (AppException ex)
             {
-                return BadRequest(new { statuscode = 404, message = ex.Message });
+                return BadRequest(new { statuscode = 400, message = ex.Message });
             }
         }
 

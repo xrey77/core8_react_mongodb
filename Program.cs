@@ -2,6 +2,7 @@ using System.Diagnostics;
 using MongoDB.Driver;
 using System.IO;
 using System.Text;
+using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;

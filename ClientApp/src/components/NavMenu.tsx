@@ -8,17 +8,17 @@ import './NavMenu.css';
 
 export function NavMenu()  {
   
-  const [username, setUsername] = useState('');
-  const [userpic, setUserpic] = useState('');
+  const [username, setUsername] = useState<string>('');
+  const [userpic, setUserpic] = useState<string>('');
 
   useEffect(() => {
-    let usrname = sessionStorage.getItem('USERNAME');    
+    const usrname = sessionStorage.getItem('USERNAME');    
     if (usrname === null) {
       setUsername('');
     } else {
       setUsername(usrname);
     }
-    let usrpic = sessionStorage.getItem("USERPIC");
+    const usrpic = sessionStorage.getItem("USERPIC");
     if (usrpic === null) {
       setUserpic('/pix.png');
     } else {

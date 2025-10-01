@@ -16,7 +16,7 @@ interface Products {
   productPicture: string
 }
 
-const formatNumberWithCommaDecimal = (number: any) => {
+const toDecimal = (number: any) => {  
   const formatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2, // Ensures at least two decimal places
     maximumFractionDigits: 2, // Limits to two decimal places
@@ -29,7 +29,8 @@ export function Catalogs() {
     let [page, setPage] = useState<number>(1);
     let [totpage, setTotpage] = useState<number>(0);
     const [prods, setProds] = useState<Products[]>([]);
-  
+    const [message, setMessage] = useState('');
+
     useEffect(() => {
         getCatalogs(page);
       },[page]);
@@ -40,8 +41,8 @@ export function Catalogs() {
             setProds(res.data.products);
             setTotpage(res.data.totpage);
             setPage(res.data.page);
-        }, (error: any) => {
-                console.log(error.message);
+        }, (error: any) => {          
+                setMessage(error.response.data.message);
                 return;
         });
     
@@ -87,6 +88,7 @@ export function Catalogs() {
   return (
 <div className="container-fluid mb-4">
     <h4 className="text-center">Product Catalogs</h4>
+    <div className='text-danger'>{message}</div>
     <div className="card-group">
     {prods.map((item) => {
             return (
@@ -100,7 +102,7 @@ export function Catalogs() {
                       </p>
                 </div>
                 <div className="card-footer">
-                    <p className="card-text text-danger"><span className="text-dark">PRICE :</span>&nbsp;<strong>&#8369;{formatNumberWithCommaDecimal(item.sellPrice)}</strong></p>
+                    <p className="card-text text-danger"><span className="text-dark">PRICE :</span>&nbsp;<strong>&#8369;{toDecimal(item.sellPrice)}</strong></p>
                 </div>  
             </div>
         );
