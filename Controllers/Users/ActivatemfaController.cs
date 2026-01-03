@@ -50,13 +50,13 @@ namespace core8_react_mongodb.Controllers.Users
                     var setupInfo = twoFactor.GenerateSetupCode(fullname, user.Email, user.Secretkey, false, 3);
                     var imageUrl = setupInfo.QrCodeSetupImageUrl;
                     _userService.ActivateMfa(id, imageUrl);
-                    return Ok(new {statuscode = 200, message="2-Factor Authenticator has been enabled."});
+                    return Ok(new {message="2-Factor Authenticator has been enabled."});
                 } else {
-                    return NotFound(new {statuscode = 404, message="User not found."});
+                    return NotFound(new {message="User not found."});
                 }
             } else {
                 _userService.ActivateMfa(id, null);
-                return Ok(new {statuscode = 200, message="2-Factor Authenticator has been disabled."});
+                return Ok(new { message="2-Factor Authenticator has been disabled."});
             }
         }
     }    

@@ -38,7 +38,7 @@ export function Profile() {
         api.get(`/api/getbyid/${id}`,{headers: {
             Authorization: `Bearer ${token}`
         }})
-        .then(res => {
+        .then((res: any) => {
             setLname(res.data.user.lastname); 
             setFname(res.data.user.firstname); 
             setEmail(res.data.user.email);
@@ -46,10 +46,13 @@ export function Profile() {
             setQrcodeurl(res.data.user.qrcodeurl)
             setUserpicture(res.data.user.profilepic);
         }, (error: any) => {
-            setProfileMsg(error.response.data.message);
-            let timer: any = setTimeout(() => {
+            if (error.response) {
+                setProfileMsg(error.response.data.message);
+            } else {
+                setProfileMsg(error.message);
+            }
+            setTimeout(() => {
                 setProfileMsg('');
-                clearTimeout(timer);
             },3000);
             return;
         });
@@ -83,7 +86,7 @@ export function Profile() {
         mfaapi.put(`/api/updateprofile/${userid}`, data, { headers: {
             Authorization: `Bearer ${token}`
         }})
-        .then((res) => {
+        .then((res: any) => {
             if (res.data.message != null) {
                 setProfileMsg(res.data.message);
                 let timer: any = setTimeout(() => {
@@ -92,10 +95,13 @@ export function Profile() {
                 },800);
             }
         }, (error: any) => {
-            setProfileMsg(error.response.data.message);
-            let timer: any = setTimeout(() => {
+            if (error.response) {
+                setProfileMsg(error.response.data.message);
+            } else {
+                setProfileMsg(error.message);
+            }
+            setTimeout(() => {
                 setProfileMsg('');
-                clearTimeout(timer);
             },3000);
         });
     }
@@ -122,7 +128,7 @@ export function Profile() {
             api.post(`/api/uploadpicture`, formData, {headers: {
                 Authorization: `Bearer ${token}`
             }})
-            .then((res) => {
+            .then((res: any) => {
                 if (res.data.message != null) {
                     console.log(res.data.message);
                     setProfileMsg(res.data.message);
@@ -133,14 +139,16 @@ export function Profile() {
                     return;
                 }
             }, (error: any) => {
-                setProfileMsg(error.response.data.message);
-                let timer: any = setTimeout(() => {
+                if (error.response) {
+                    setProfileMsg(error.response.data.message);
+                } else {
+                    setProfileMsg(error.message);
+                }                    
+                setTimeout(() => {
                     setProfileMsg('');
-                    clearTimeout(timer);
                 },3000);
                 return;
-            });
-    
+            });    
     }
 
     const mfaCheckbox = (e: any) => {
@@ -158,17 +166,19 @@ export function Profile() {
         mfaapi.put(`/api/enablemfa/${userid}`, data, {headers: {
             Authorization: `Bearer ${token}`
         }})
-        .then((res) => {
+        .then((res: any) => {
             setProfileMsg("Please Scan QRCODE using your Authenticator App.");
-            let timer: any = setTimeout(() => {
+            setTimeout(() => {
                 setQrcodeurl(res.data.qrcodeurl);
-                clearTimeout(timer);
             },3000);
         }, (error: any) => {
-            setProfileMsg(error.response.data.message);
-            let timer: any = setTimeout(() => {
+            if (error.response) {
+                setProfileMsg(error.response.data.message);
+            } else {
+                setProfileMsg(error.message);
+            }
+            setTimeout(() => {
                 setProfileMsg('');
-                clearTimeout(timer);
             },3000);
             return;
         });
@@ -187,10 +197,13 @@ export function Profile() {
                 clearTimeout(timer);
             },3000);
         }, (error: any) => {
-            setProfileMsg(error.response.data.message);            
-            let timer: any = setTimeout(() => {
+            if (error.response) {
+                setProfileMsg(error.response.data.message);
+            } else {
+                setProfileMsg(error.message);
+            }
+            setTimeout(() => {
                 setProfileMsg('');
-                clearTimeout(timer);
             },3000);
             return;
         });
@@ -227,7 +240,7 @@ export function Profile() {
         mfaapi.patch(`/api/updatepassword`, data, {headers: {
             Authorization: `Bearer ${token}`
         }})
-        .then((res) => {
+        .then((res: any) => {
             if (res.data.message != null) {
                 setProfileMsg(res.data.message);
                 let timer: any = setTimeout(() => {
@@ -237,10 +250,13 @@ export function Profile() {
                 return;
             }
         }, (error: any) => {
-            setProfileMsg(error.response.data.message);
-            let timer: any = setTimeout(() => {
+            if (error.response) {
+                setProfileMsg(error.response.data.message);
+            } else {
+                setProfileMsg(error.message);
+            }
+            setTimeout(() => {
                 setProfileMsg('');
-                clearTimeout(timer);
             },3000);
             return;
         });        

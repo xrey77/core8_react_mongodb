@@ -18,10 +18,9 @@ interface Products {
 
 const toDecimal = (number: any) => {  
   const formatter = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 2, // Ensures at least two decimal places
-    maximumFractionDigits: 2, // Limits to two decimal places
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   });
-  // Format the number
   return formatter.format(number);
 };
 
@@ -37,12 +36,19 @@ export function Catalogs() {
     
       const getCatalogs = (pg: any) => {
         api.get(`/api/listproducts/${pg}`)
-        .then((res) => {
+        .then((res: any) => {
             setProds(res.data.products);
             setTotpage(res.data.totpage);
             setPage(res.data.page);
         }, (error: any) => {          
+              if (error.response) {
                 setMessage(error.response.data.message);
+              } else {
+                setMessage(error.message);
+              }
+              setTimeout(() => {
+                setMessage('');
+              }, 3000);
                 return;
         });
     

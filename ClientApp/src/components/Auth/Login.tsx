@@ -50,7 +50,11 @@ export function Login() {
               setLoginMessage('');
             }, 3000);
       }, (error: any) => {
-            setLoginMessage(error.response.data.message);
+            if (error.response) {
+              setLoginMessage(error.response.data.message);
+            } else {
+              setLoginMessage(error.message);
+            }
             setTimeout(() => {
               setLoginMessage('');
             }, 3000);

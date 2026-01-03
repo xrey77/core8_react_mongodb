@@ -59,11 +59,11 @@ public class AddController : ControllerBase
                 prods.CriticalStocks = model.CriticalStocks;                
                 prods.CreatedAt = now;      
                 _productService.addProduct(prods);
-                return Ok(new {statuscode = 201, message = "New product has been added."});
+                return Ok(new {message = "New product has been added."});
             }
             catch (AppException ex)
             {
-                return BadRequest(new { statuscode = 400, message = ex.Message });
+                return BadRequest(new { message = ex.Message });
             }
     }
 

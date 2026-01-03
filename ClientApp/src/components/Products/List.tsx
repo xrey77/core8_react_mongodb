@@ -38,12 +38,16 @@ export function ProductList() {
 
   const getProducts = (pg: any) => {
     api.get(`/api/listproducts/${pg}`)
-    .then((res) => {
+    .then((res: any) => {
         setProds(res.data.products);
         setTotpage(res.data.totpage);
         setPage(res.data.page);
     }, (error: any) => {
-        setMessage(error.message);
+        if (error.response) {
+          setMessage(error.response.data.message);
+        } else {
+          setMessage(error.message);
+        }
         return;
     });
   }

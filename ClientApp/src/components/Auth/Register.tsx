@@ -42,7 +42,11 @@ export function Register() {
             setRegisterMsg('');
           }, 3000);
       }, (error: any) => {
-            setRegisterMsg(error.response.data.message);
+            if (error.response) {
+              setRegisterMsg(error.response.data.message);
+            } else {
+              setRegisterMsg(error.message);
+            }
             window.setTimeout(() => {
               setRegisterMsg('');
             }, 3000);

@@ -66,11 +66,11 @@ public class RegisterController : ControllerBase
                 String subject = "Barclays Account Activation";                
                 _emailService.sendMail(emailaddress, fullname, subject, htmlmsg);
 */
-                return Ok(new {statuscode = 201, message = "Please check your e-mail inbox and click button activation"});
+                return Ok(new {message = "Please check your e-mail inbox and click button activation"});
             }
             catch (AppException ex)
             {
-                return BadRequest(new { statuscode = 400, message = ex.Message });
+                return BadRequest(new { message = ex.Message });
             }
     }
 

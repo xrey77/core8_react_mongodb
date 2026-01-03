@@ -32,7 +32,11 @@ export default function Mfa() {
             window.location.reload();
           }, 3000);
       }, (error: any) => {
-            setOtpMessage(error.response.data.message);
+            if (error.response) {
+              setOtpMessage(error.response.data.message);
+            } else {
+              setOtpMessage(error.message);
+            }
             window.setTimeout(() => {
               setOtpMessage('');
             }, 3000);
